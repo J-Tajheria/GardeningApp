@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Seed {
+  id              Int              @id @default(autoincrement())
+  name            String
+  description     String
+  imageUrl        String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  harvestWindows  HarvestWindow[]
+  plantingWindows PlantingWindow[]
+}
+
+model PlantingWindow {
+  id           Int     @id @default(autoincrement())
+  seedId       Int
+  startMonth   Int
+  endMonth     Int
+  environment  String
+  plantingNote String?
+  seed         Seed    @relation(fields: [seedId], references: [id], onDelete: Cascade)
+
+  @@index([seedId])
+}
+
+model HarvestWindow {
+  id             Int     @id @default(autoincrement())
+  seedId         Int
+  startMonth     Int
+  endMonth       Int
+  harvestingNote String?
+  seed           Seed    @relation(fields: [seedId], references: [id], onDelete: Cascade)
+
+  @@index([seedId])
+}

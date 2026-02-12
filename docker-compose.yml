@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16
+    container_name: gardeningapp_postgres
+    environment:
+      POSTGRES_USER: gardening
+      POSTGRES_PASSWORD: gardening_password
+      POSTGRES_DB: gardening_db
+    ports:
+      - "5432:5432" 
+    volumes:
+      - gardening_pgdata:/var/lib/postgresql/data
+
+volumes:
+  gardening_pgdata:
